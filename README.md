@@ -22,8 +22,44 @@ data-config: 配置文件地址
 
 data-main: 主文件地址
 
+2）配置：
 
-2）书写：
+<code>
+define({
+
+	debug: true,
+	
+	alias: {
+		a: "bbb/libs/jquery.1.9.1.js",
+		b: "ccc/plugs/plugs.1.0.0.js",
+		d: "./plugs/plugs.js",
+		e: "http://my.ku6.com/i/service/signed/unreadmessagecount",
+		c: {
+			url: "ddd/unreadmessagecount",
+			callback: function(data) {
+				alert("jsonp");
+			}
+		},
+		f: "./test.js",
+		h: "./test1.js"
+	},
+	
+	paths: {
+		bbb: "http://js.ku6cdn.com/comm/my",
+		ccc: "http://js.ku6cdn.com/comm/my/0.0.8/modules",
+		ddd: "http://my.ku6.com/i/service/signed"
+	}});
+</code>
+
+解释：
+
+debug: 是否处于调试
+
+alias: ni文件地址
+
+paths: 
+
+3）书写：
 
 代码：
 
