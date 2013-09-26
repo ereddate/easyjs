@@ -33,7 +33,7 @@ define({
 		a: "bbb/libs/jquery.1.9.1.js",
 		b: "ccc/plugs/plugs.1.0.0.js",
 		d: "./plugs/plugs.js",
-		e: "http://my.ku6.com/i/service/signed/unreadmessagecount",
+		e: "aaaaaa/bbb/ccc",
 		c: {
 			url: "ddd/unreadmessagecount",
 			callback: function(data) {
@@ -45,9 +45,9 @@ define({
 	},
 	
 	paths: {
-		bbb: "http://js.ku6cdn.com/comm/my",
-		ccc: "http://js.ku6cdn.com/comm/my/0.0.8/modules",
-		ddd: "http://my.ku6.com/i/service/signed"
+		bbb: "http://a.b.com/comm/",
+		ccc: "http://c.b.com/comm/",
+		ddd: "http://d.b.com/i/"
 	}});
 </code>
 
@@ -70,7 +70,7 @@ define(function(require, exports, module) {
 	
 	var b = require("f");
 	
-	module.use("http://js.ku6cdn.com/comm/my/libs/jquery.1.9.1.js", function(){
+	module.use("http://a.b.com/comm/jquery.1.9.1.js", function(){
 	
 		console.log(jQuery);
 		
