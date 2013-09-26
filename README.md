@@ -55,9 +55,9 @@ define({
 
 debug: 是否处于调试
 
-alias: 匿名文件地址
+alias: 别名
 
-paths: 匿名凤凰网
+paths: 路径
 
 3）书写：
 
