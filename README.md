@@ -8,7 +8,9 @@ easyjs
 
 head标签：
 
+<code>
 <script src="./libs/easyjs.0.0.1.js" id="root" data-config="./config.js" data-main="./app.js"></script>
+</code>
 
 属性：
 
