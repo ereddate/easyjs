@@ -5,6 +5,7 @@ easyjs
 
 
 1）引用：
+======
 
 head标签：
 
@@ -23,6 +24,7 @@ data-config: 配置文件地址
 data-main: 主文件地址
 
 2）配置：
+======
 
 <code>
 define({
@@ -60,6 +62,7 @@ alias: 别名
 paths: 路径
 
 3）书写：
+======
 
 代码：
 
