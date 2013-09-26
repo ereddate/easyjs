@@ -15,9 +15,13 @@ head标签：
 属性：
 
 src: 框架地址，目录只认libs
+
 id: 只读
+
 data-config: 配置文件地址
+
 data-main: 主文件地址
+
 
 2）书写：
 
@@ -42,16 +46,18 @@ define(function(require, exports, module) {
 		
 	});
 	
-	exports.aaa = "a";
-	
-});
+	exports.aaa = "a";});
 </code>
+
 
 解释：
 
 require: 引入指定名称的模块，如模块提供返回接口，就会返回结果。
+
 exports: 返回值对象。
+
 module: easyjs主体。
+
 
 单模块配置及引用方式：
 
