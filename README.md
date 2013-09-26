@@ -23,17 +23,19 @@ data-main: 主文件地址
 
 代码：
 
+<code>
 define(function(require, exports, module) {
-	\nrequire("a");
-	\nvar b = require("f");
-	\nmodule.use("http://js.ku6cdn.com/comm/my/libs/jquery.1.9.1.js", function(){
-		\nconsole.log(jQuery);
-	\n});
-	\nmodule.use("./plugs/plugs.js", function(){
-		\nconsole.log("plugs");
-	\n});
-	\nexports.aaa = "a";
-\n});
+	require("a");
+	var b = require("f");
+	module.use("http://js.ku6cdn.com/comm/my/libs/jquery.1.9.1.js", function(){
+		console.log(jQuery);
+	});
+	module.use("./plugs/plugs.js", function(){
+		console.log("plugs");
+	});
+	exports.aaa = "a";
+});
+</code>
 
 解释：
 
