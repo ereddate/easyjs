@@ -25,15 +25,25 @@ data-main: 主文件地址
 
 <code>
 define(function(require, exports, module) {
+
 	require("a");
+	
 	var b = require("f");
+	
 	module.use("http://js.ku6cdn.com/comm/my/libs/jquery.1.9.1.js", function(){
+	
 		console.log(jQuery);
+		
 	});
+	
 	module.use("./plugs/plugs.js", function(){
+	
 		console.log("plugs");
+		
 	});
+	
 	exports.aaa = "a";
+	
 });
 </code>
 
