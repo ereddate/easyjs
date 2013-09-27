@@ -71,6 +71,10 @@ define({
 
 debug: 是否处于调试
 
+frame: 开发框架
+
+main: 开发主文件
+
 alias: 别名
 
 paths: 路径
