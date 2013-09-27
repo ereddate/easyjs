@@ -136,9 +136,11 @@ module.extend(原对象或扩展方法名, 函数或对象);
 module.implement(原对象或扩展方法名, 函数或对象);
 
 
-<code>
-	module.extend("jq", jQuery);
+<code>	module.extend("jq", jQuery);
+	
 	module.jq(function(){
+	
 		alert("hello");
+		
 	});
 </code>
