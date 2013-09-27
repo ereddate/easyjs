@@ -127,6 +127,19 @@ module.loadJs(文件地址, 回调函数);
 
 module.loadCss(文件地址, 回调函数);
 
+<code>	module.use("./plugs/plugs.js", function(){
+	
+		console.log("plugs_use");
+		
+	});
+	
+	module.loadCss("./css/index.css", function(){
+	
+		module.jq("#aaa").addClass("a").show();
+		
+	});
+</code>
+
 
 可扩展：
 ======
