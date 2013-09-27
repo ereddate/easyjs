@@ -266,7 +266,7 @@
 			REQUIRE_RE: /"(?:\\"|[^"])*"|'(?:\\'|[^'])*'|\/\*[\S\s]*?\*\/|\/(?:\\\/|[^\/\r\n])+\/(?=[^\/])|\/\/.*|\.\s*require|(?:^|[^$])\brequire\s*\(\s*(["'])(.+?)\1\s*\)/g,
 			SLASH_RE: /\\\\/g
 		}
-	}).extend("ver", "0.2.201309271106").extend("each", function(obj, callback, args) {
+	}).extend("ver", "0.2.20130927110601").extend("each", function(obj, callback, args) {
 		if (typeof obj == "undefined") return this;
 		if (obj && isFunction(obj)) {
 			callback = obj;
