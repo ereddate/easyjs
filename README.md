@@ -5,6 +5,19 @@ easyjs
 
 最新版本：0.0.2
 
+目录：
+======
+
+1）<a href="https://github.com/ereddate/easyjs/edit/master/README.md#1%E5%BC%95%E7%94%A8">引用</a>
+
+2）<a href="https://github.com/ereddate/easyjs/edit/master/README.md#2%E9%85%8D%E7%BD%AE">配置</a>
+
+3）<a href="https://github.com/ereddate/easyjs/edit/master/README.md#3%E4%B9%A6%E5%86%99">书写</a>
+
+4）<a href="https://github.com/ereddate/easyjs/edit/master/README.md#4%E5%8D%95%E6%A8%A1%E5%9D%97%E9%85%8D%E7%BD%AE%E5%8F%8A%E5%BC%95%E7%94%A8%E6%96%B9%E5%BC%8F">单模块配置及引用方式</a>
+
+5）<a href="https://github.com/ereddate/easyjs/edit/master/README.md#5%E5%8F%AF%E6%89%A9%E5%B1%95">可扩展</a>
+
 
 1）引用：
 ======
@@ -27,6 +40,8 @@ data-main: 主文件地址
 
 2）配置：
 ======
+
+代码：
 
 <code>
 define({
@@ -116,7 +131,7 @@ exports: 返回值对象。
 module: easyjs主体。
 
 
-单模块配置及引用方式：
+4）单模块配置及引用方式：
 ======
 
 module.config(配置对象);
@@ -126,6 +141,9 @@ module.use(引用模块地址, 回调函数);
 module.loadJs(文件地址, 回调函数);
 
 module.loadCss(文件地址, 回调函数);
+
+
+代码：
 
 <code>	module.use("./plugs/plugs.js", function(){
 	
@@ -141,7 +159,7 @@ module.loadCss(文件地址, 回调函数);
 </code>
 
 
-可扩展：
+5）可扩展：
 ======
 
 为什么说我们是框架，因为我们是可扩展的，是要创造一个完整生态系统的。
@@ -150,6 +168,7 @@ module.extend(原对象或扩展方法名, 函数或对象);
 
 module.implement(原对象或扩展方法名, 函数或对象);
 
+代码：
 
 <code>	module.extend("jq", jQuery);
 	
