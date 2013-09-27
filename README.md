@@ -3,8 +3,11 @@ easyjs
 
 方便快捷的Javascript模块管理框架，这就是我们的目标。
 
+最新版本：0.0.2
+
 
 1）引用：
+======
 
 head标签：
 
@@ -23,6 +26,7 @@ data-config: 配置文件地址
 data-main: 主文件地址
 
 2）配置：
+======
 
 <code>
 define({
@@ -72,6 +76,7 @@ alias: 别名
 paths: 路径
 
 3）书写：
+======
 
 代码：
 
@@ -108,6 +113,7 @@ module: easyjs主体。
 
 
 单模块配置及引用方式：
+======
 
 module.config(配置对象);
 
