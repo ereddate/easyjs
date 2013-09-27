@@ -29,15 +29,27 @@ define({
 
 	debug: true,
 	
+	frame: "jquery",  //20130927增加
+	
+	main: "app",  //20130927增加
+	
 	alias: {
-		a: "bbb/libs/jquery.1.9.1.js",
+		jquery: "bbb/libs/jquery.1.9.1.js",
+		main: "./app.js",
 		b: "ccc/plugs/plugs.1.0.0.js",
 		d: "./plugs/plugs.js",
 		e: "aaaaaa/bbb/ccc",
 		c: {
 			url: "ddd/unreadmessagecount",
+			type: "jsonp",  //20130927增加
 			callback: function(data) {
-				alert("jsonp");
+				alert(data);
+			}
+		},
+		g: {
+			url: "./plugs/plugs.js",
+			callback: function() {
+				console.log("plug_ok");
 			}
 		},
 		f: "./test.js",
