@@ -122,3 +122,23 @@ module: easyjs主体。
 module.config(配置对象);
 
 module.use(引用模块地址, 回调函数);
+
+module.loadJs(文件地址, 回调函数);
+
+module.loadCss(文件地址, 回调函数);
+
+
+可扩展：（为什么说我们是框架，因为我们是可扩展的）
+======
+
+module.extend(原对象或扩展方法名, 函数或对象);
+
+module.implement(原对象或扩展方法名, 函数或对象);
+
+
+<code>
+	module.extend("jq", jQuery);
+	module.jq(function(){
+		alert("hello");
+	});
+</code>
