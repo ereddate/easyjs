@@ -219,7 +219,6 @@
 				target[arguments[0]] = arguments[1];
 			} else if ((isParentObject(arguments[0]) || typeof arguments[0] == "string") && isFunction(arguments[1])) {
 				target = this;
-				//arg = toArray(arguments[0]);
 				target.config(arguments[0]);
 				target.use(arguments[0], arguments[1]);
 			}
@@ -227,7 +226,6 @@
 			key = arguments[0];
 			options = arguments[1];
 			callback = arguments[2];
-			//arg = toArray(options);
 			target.extend(key, function() {
 				target.config(options);
 				target.use(options, callback);
@@ -268,7 +266,7 @@
 			REQUIRE_RE: /"(?:\\"|[^"])*"|'(?:\\'|[^'])*'|\/\*[\S\s]*?\*\/|\/(?:\\\/|[^\/\r\n])+\/(?=[^\/])|\/\/.*|\.\s*require|(?:^|[^$])\brequire\s*\(\s*(["'])(.+?)\1\s*\)/g,
 			SLASH_RE: /\\\\/g
 		}
-	}).extend("ver", "0.2.201309241658").extend("each", function(obj, callback, args) {
+	}).extend("ver", "0.2.201309271106").extend("each", function(obj, callback, args) {
 		if (typeof obj == "undefined") return this;
 		if (obj && isFunction(obj)) {
 			callback = obj;
@@ -289,7 +287,17 @@
 			options.id = options.id ? options.id : regFile ? "easyjs_" + regFile[1].replace(/.js|.css/gi, "") : (type == "js" ? "easyjs_loadJs" : "easyjs_loadCss") + random(10000, 0);
 			options.code = isSiteUri && typeof _SITE_.version != "undefined" ? "ver=" + _SITE_.version.js : "random=" + random(10000, 0);
 			if (type == "js") {
-				if (easyjs.data[options.src]) return this;
+				if (easyjs.data[url]) {
+					var exports = easyjs.aid.runSaveCode({
+						url: url
+					});
+					if (callback) {
+						setTimeout(function() {
+							callback();
+						}, type == "js" ? 20 : 1);
+					}
+					return this;
+				};
 				if ("async" in dom) {
 					options.async = options["async"] || "";
 				}
@@ -363,14 +371,30 @@
 				},
 				loadFn = function(i) {
 					var data = easyjs.aid.fix(names[i]);
-					if (!easyjs.data[data.url]) {
+					if (data.type == "default") {
 						easyjs.loadJs(data.url, function() {
 							if (data.configCall) data.configCall();
 							request(i, names);
 						});
-					} else {
-						if (data.configCall) data.configCall();
-						request(i, names);
+					} else if (data.type == "jsonp") {
+						var id = "easyjs_ajax_" + (easyjs.data.ajaxs._count += 1),
+							url = data.url + (/\?/.test(data.url) ? "&" : "?") + "cb=" + id;
+						win[id] = function(result) {
+							win[id] = null;
+							easyjs.extend((easyjs.data.ajaxs[id] = {}), {
+								url: data.url,
+								data: result || undefined,
+								status: result ? "ok" : "error"
+							});
+							if (result) {
+								data.configCall(result, "ok");
+							} else {
+								data.configCall(undefined, "error");
+							}
+						};
+						easyjs.loadJs(url, function() {
+							request(i, names);
+						});
 					}
 				};
 			loadFn(0);
@@ -383,7 +407,8 @@
 			fixurl = function(url) {
 				return /^(https|http)\:\/\//.test(url) ? url : /^\.+\//.test(url) ? url.replace(/^\.+\//, easyjs.data.base) : url;
 			},
-			dir, url, configCall = undefined;
+			dir, url, configCall = undefined,
+			type = "default";
 		if (typeof path == "string") {
 			dir = easyjs.data.paths[path.split('/')[0]] || undefined;
 			url = dir ? path.replace(path.split('/')[0], dir) : fixurl(path);
@@ -392,11 +417,21 @@
 			dir = easyjs.data.paths[url.split('/')[0]] || undefined;
 			url = dir ? url.replace(url.split('/')[0], dir) : fixurl(url);
 			configCall = path.callback || undefined;
+			type = path.type || "default";
 		}
 		return {
 			url: url,
+			type: type,
 			configCall: configCall
 		};
+	});
+	easyjs.extend.call(easyjs.aid, "runSaveCode", function(rdata) {
+		var exports = define.exports = {};
+		(window.execScript || function(data) {
+			return window["eval"].call(window, data);
+		})("(" + easyjs.data[rdata.url].code + ")(define.require, define.exports, easyjs)");
+		easyjs.data[rdata.url].exports = exports;
+		return exports;
 	});
 	var unload = function() {
 		var callback = function() {
@@ -480,28 +515,28 @@
 		var args = arguments,
 			len = args.length,
 			kasr = easyjs.aid.sMatch.rprandom;
+		if (!activeScript) {
+			activeScript = define.getCurrentScript().src.replace(kasr, "");
+		}
+		activeScript = activeScript.replace(kasr, "");
+		var datas = easyjs.data[activeScript];
 		if (len == 1) {
 			if (isParentObject(args[0])) {
 				easyjs.config(args[0]);
-				activeScript = activeScript.replace(kasr, "");
-				easyjs.extend(easyjs.data[activeScript], {
+				easyjs.extend(datas, {
 					code: args[0],
 					dependencies: undefined,
 					status: 2
 				});
 			} else if (isFunction(args[0])) {
 				var argStr = args[0].toString();
-				if (!activeScript) {
-					activeScript = define.getCurrentScript().src.replace(kasr, "");
-				}
-				activeScript = activeScript.replace(kasr, "");
-				easyjs.extend(easyjs.data[activeScript], {
+				easyjs.extend(datas, {
 					code: argStr.replace(/\r|\n|\s{2,}/gi, ""),
 					dependencies: define.parseDependencies(argStr),
 					status: 2,
 					exports: {}
 				});
-				easyjs.use((easyjs.data[activeScript].dependencies && easyjs.data[activeScript].dependencies.join(' ') || ""), function() {
+				easyjs.use((datas.dependencies && datas.dependencies.join(' ') || ""), function() {
 					var require = define.require = function(name) {
 						var rdata = easyjs.aid.fix(name),
 							exports = define.exports = {};
@@ -509,12 +544,7 @@
 							if (easyjs.data[rdata.url].status == 2 && !isEmptyObject(easyjs.data[rdata.url].exports)) {
 								exports = easyjs.data[rdata.url].exports;
 							} else {
-								(window.execScript || function(data) {
-									return window["eval"].call(window, data);
-								})("(" + easyjs.data[rdata.url].code + ")(define.require, define.exports, easyjs)");
-								easyjs.extend(easyjs.data[rdata.url], {
-									exports: exports
-								});
+								exports = easyjs.aid.runSaveCode(rdata) || {};
 							}
 							return exports;
 						}
@@ -522,8 +552,8 @@
 						fexports = {},
 						module = easyjs;
 					args[0](require, fexports, module);
-					if (easyjs.data[activeScript].code && args[0].toString().replace(/\r|\n|\s{2,}/gi, "")) {
-						easyjs.extend(easyjs.data[activeScript], {
+					if (datas.code && args[0].toString().replace(/\r|\n|\s{2,}/gi, "") && isEmptyObject(datas.exports)) {
+						easyjs.extend(datas, {
 							exports: fexports
 						});
 					}
@@ -591,17 +621,20 @@
 	base = loadeasyjs.src ? /((.+[\/].+)+?|)\/libs\/(easyjs.+?)\.js/.exec(loadeasyjs.getAttribute("src"))[1] || /((.+[\/].+)+?|)\//.exec(win.location.href)[1] : "";
 	easyjs.data = {
 		base: base + "/",
-		debug: true
+		debug: true,
+		ajaxs: {
+			_count: 0
+		}
 	};
 	config = loadeasyjs.getAttribute("data-config") || undefined;
 	if (config) {
 		easyjs.loadJs(config, function() {
-			var main = loadeasyjs.getAttribute("data-main") || undefined;
-			if (main) {
-				easyjs(function() {
-					easyjs.loadJs(main, function() {});
-				});
-			}
+			easyjs.use([easyjs.data["frame"], (loadeasyjs.getAttribute("data-main") || easyjs.data["main"])].join(' '));
+		});
+	} else {
+		easyjs.extend(easyjs.data, {
+			alias: {},
+			paths: {}
 		});
 	}
 
