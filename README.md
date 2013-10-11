@@ -187,6 +187,7 @@ module.implement(原对象或扩展方法名, 函数或对象);
 0.0.5 修复路径识别问题
 
 7）案例
+======
 
 酷六网专题 - 是真的吗
 http://life.ku6.com/true/index.shtml
