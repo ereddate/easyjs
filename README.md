@@ -18,6 +18,10 @@ easyjs
 
 5）<a href="https://github.com/ereddate/easyjs/blob/master/README.md#5%E5%8F%AF%E6%89%A9%E5%B1%95">可扩展</a>
 
+6）<a href="https://github.com/ereddate/easyjs/blob/master/README.md#6%E5%BC%80%E5%8F%91%E5%8E%86%E5%8F%B2">开发历史</a>
+
+7）<a href="https://github.com/ereddate/easyjs/blob/master/README.md#7%E6%A1%88%E4%BE%8B">案例</a>
+
 
 1）引用：
 ======
