@@ -190,6 +190,9 @@ module.implement(原对象或扩展方法名, 函数或对象);
 ======
 
 酷六网专题 - 是真的吗
+
 http://life.ku6.com/true/index.shtml
+
+使用版本：0.0.4
 
 
