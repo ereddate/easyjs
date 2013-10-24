@@ -201,4 +201,8 @@ http://life.ku6.com/true/index.shtml
 
 使用版本：0.0.4
 
+酷六网专题 - 滔滔不绝
 
+http://ent.ku6.com/ttbjindex/index.shtml
+
+使用版本：0.0.5
