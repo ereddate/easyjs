@@ -22,7 +22,7 @@ easyjs
 
 7）<a href="https://github.com/ereddate/easyjs#7%E6%A1%88%E4%BE%8B">案例</a>
 
-8）<a href="https://github.com/ereddate/easyjs#7%E6%A1%88%E4%BE%8B">未来</a>
+8）<a href="https://github.com/ereddate/easyjs#8%E6%9C%AA%E6%9D%A5">未来</a>
 
 1）引用：
 ======
