@@ -8,20 +8,21 @@ easyjs
 目录：
 ======
 
-1）<a href="https://github.com/ereddate/easyjs/blob/master/README.md#1%E5%BC%95%E7%94%A8">引用</a>
+1）<a href="https://github.com/ereddate/easyjs#1%E5%BC%95%E7%94%A8">引用</a>
 
-2）<a href="https://github.com/ereddate/easyjs/blob/master/README.md#2%E9%85%8D%E7%BD%AE">配置</a>
+2）<a href="https://github.com/ereddate/easyjs#2%E9%85%8D%E7%BD%AE">配置</a>
 
-3）<a href="https://github.com/ereddate/easyjs/blob/master/README.md#3%E4%B9%A6%E5%86%99">书写</a>
+3）<a href="https://github.com/ereddate/easyjs#3%E4%B9%A6%E5%86%99">书写</a>
 
-4）<a href="https://github.com/ereddate/easyjs/blob/master/README.md#4%E5%8D%95%E6%A8%A1%E5%9D%97%E9%85%8D%E7%BD%AE%E5%8F%8A%E5%BC%95%E7%94%A8%E6%96%B9%E5%BC%8F">单模块配置及引用方式</a>
+4）<a href="https://github.com/ereddate/easyjs#4%E5%8D%95%E6%A8%A1%E5%9D%97%E9%85%8D%E7%BD%AE%E5%8F%8A%E5%BC%95%E7%94%A8%E6%96%B9%E5%BC%8F">单模块配置及引用方式</a>
 
-5）<a href="https://github.com/ereddate/easyjs/blob/master/README.md#5%E5%8F%AF%E6%89%A9%E5%B1%95">可扩展</a>
+5）<a href="https://github.com/ereddate/easyjs#5%E5%8F%AF%E6%89%A9%E5%B1%95">可扩展</a>
 
-6）<a href="https://github.com/ereddate/easyjs/blob/master/README.md#6%E5%BC%80%E5%8F%91%E5%8E%86%E5%8F%B2">开发历史</a>
+6）<a href="https://github.com/ereddate/easyjs#6%E5%BC%80%E5%8F%91%E5%8E%86%E5%8F%B2">开发历史</a>
 
-7）<a href="https://github.com/ereddate/easyjs/blob/master/README.md#7%E6%A1%88%E4%BE%8B">案例</a>
+7）<a href="https://github.com/ereddate/easyjs#7%E6%A1%88%E4%BE%8B">案例</a>
 
+8）<a href="https://github.com/ereddate/easyjs#7%E6%A1%88%E4%BE%8B">未来</a>
 
 1）引用：
 ======
@@ -208,3 +209,13 @@ http://life.ku6.com/true/index.shtml
 http://ent.ku6.com/ttbjindex/index.shtml
 
 使用版本：0.0.6
+
+8）未来
+
+未来 easyjs 将增加插件功能，提供大量的外挂插件。
+
+编写开发规范，指导开发爱好者实现 easyjs 真正的生态系统。
+
+easyjs 提供的插件不再是dom选择器等传统框架提供的功能，而是完整的、解决问题的、实现梦想的插件。
+
+easyjs 等待您的加入，欢迎访问我们的微博 http://weibo.com/iliulancom
