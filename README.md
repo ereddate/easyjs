@@ -3,7 +3,7 @@ easyjs
 
 方便快捷的Javascript模块管理，这就是我们的目标。
 
-最新版本：0.0.6
+最新版本：0.0.7
 
 目录：
 ======
@@ -30,7 +30,7 @@ easyjs
 head标签：
 
 <code>
-\<script src="./libs/easyjs.0.0.1.js" id="root" data-config="./config.js" data-main="./app.js"\>\</script\>
+\<script src="./libs/easyjs.0.0.1.js" id="root" data-config="./config.js" data-main="./app.js" data-file="./demo/easyjs.fn.js ./demo/easyjs.fna.js"\>\</script\>
 </code>
 
 属性：
@@ -42,6 +42,8 @@ id: 只读
 data-config: 配置文件地址
 
 data-main: 主文件地址
+
+data-file: 预先加载文件地址
 
 2）配置：
 ======
@@ -57,6 +59,10 @@ define({
 	
 	main: "app",  //20130927增加
 	
+	charset: "utf-8", //20131028增加
+
+	base: "http://www.aaa.com/easyjs/" //20131028增加
+
 	alias: {
 		jquery: "bbb/libs/jquery.1.9.1.js",
 		main: "./app.js",
@@ -84,7 +90,11 @@ define({
 		bbb: "http://a.b.com/comm/",
 		ccc: "http://c.b.com/comm/",
 		ddd: "http://d.b.com/i/"
-	}});
+	},
+
+    preload: ["./demo/easyjs.dom.js", "./demo/easyjs.style.js"]  //20131028增加
+
+});
 </code>
 
 解释：
@@ -95,9 +105,15 @@ frame: 开发框架
 
 main: 开发主文件
 
+charset: 编码
+
+base: 根目录
+
 alias: 别名
 
 paths: 路径
+
+preload: 预先加载（在开发主文件加载前、开发框架加载后加载）
 
 3）书写：
 ======
@@ -194,6 +210,8 @@ module.implement(原对象或扩展方法名, 函数或对象);
 0.0.5 修复路径识别问题
 
 0.0.6 修复loadJs方法无法重复请求的问题并修改内部逻辑
+
+0.0.7 修复之前版本define嵌套use无法执行等问题并优化内部逻辑，增加预先加载
 
 7）案例
 ======
