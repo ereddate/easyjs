@@ -5,6 +5,10 @@ easyjs
 
 最新版本：0.0.7
 
+官方博客：http://blog.sina.com.cn/u/3868382222
+
+官方微博：http://weibo.com/u/3868382222
+
 目录：
 ======
 
@@ -234,4 +238,4 @@ http://ent.ku6.com/ttbjindex/index.shtml
 
 easyjs 提供的插件不再是dom选择器等传统框架提供的功能，而是完整的、解决问题的、实现梦想的插件。
 
-easyjs 等待您的加入，欢迎访问我们的微博 http://weibo.com/iliulancom
+easyjs 等待您的加入。
