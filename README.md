@@ -30,16 +30,7 @@ easyjs
 head标签：
 
 <code>
-\<script src="./libs/easyjs.0.0.1.js" id="root"
-
-data-config="./config.js"
-
-data-main="./app.js"
-
-data-file="./demo/easyjs.fn.js ./demo/easyjs.fna.js"
-
-\>\</script\>
-</code>
+\<script src="./libs/easyjs.0.0.1.js" id="root" data-config="./config.js" data-main="./app.js" data-file="./demo/easyjs.fn.js ./demo/easyjs.fna.js" \>\</script\></code>
 
 属性：
 
@@ -99,10 +90,8 @@ define({
 		ccc: "http://c.b.com/comm/",
 		ddd: "http://d.b.com/i/"
 	},
-
-    preload: ["./demo/easyjs.dom.js", "./demo/easyjs.style.js"]  //20131028增加
-
-});
+	
+	preload: ["./demo/easyjs.dom.js", "./demo/easyjs.style.js"]  //20131028增加});
 </code>
 
 解释：
