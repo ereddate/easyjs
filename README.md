@@ -3,7 +3,7 @@ easyjs
 
 方便快捷的Javascript模块管理，这就是我们的目标。
 
-最新版本：0.0.7
+最新版本：0.0.8
 
 官方博客：http://blog.sina.com.cn/u/3868382222
 
@@ -72,13 +72,6 @@ define({
 		b: "ccc/plugs/plugs.1.0.0.js",
 		d: "./plugs/plugs.js",
 		e: "aaaaaa/bbb/ccc",
-		c: {
-			url: "ddd/unreadmessagecount",
-			type: "jsonp",  //20130927增加
-			callback: function(data) {
-				alert(data);
-			}
-		},
 		g: {
 			url: "./plugs/plugs.js",
 			callback: function() {
@@ -155,6 +148,7 @@ module: easyjs主体。
 
 4）单模块配置及引用方式：
 ======
+module.require(模块名);
 
 module.config(配置对象);
 
@@ -188,8 +182,6 @@ module.loadCss(文件地址, 回调函数);
 
 module.extend(原对象或扩展方法名, 函数或对象);
 
-module.implement(原对象或扩展方法名, 函数或对象);
-
 代码：
 
 <code>	module.extend("jq", jQuery);
@@ -213,6 +205,8 @@ module.implement(原对象或扩展方法名, 函数或对象);
 0.0.6 修复loadJs方法无法重复请求的问题并修改内部逻辑
 
 0.0.7 修复之前版本define嵌套use无法执行等问题并优化内部逻辑，增加预先加载
+
+0.0.8 修复之前只能加载两个依赖项等问题及优化内部逻辑
 
 7）案例
 ======
