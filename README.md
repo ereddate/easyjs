@@ -3,6 +3,8 @@ easyjs
 
 方便快捷的Javascript模块管理，这就是我们的目标。
 
+<p>声明：此框架与其他名称相近或同名的（包括easyjs.org）无任何关系。</p>
+
 最新版本：0.0.8
 
 官方博客：http://blog.sina.com.cn/u/3868382222
