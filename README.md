@@ -5,7 +5,7 @@ easyjs
 
 <p>声明：此框架与其他名称相近或同名的（包括easyjs.org）无任何关系。</p>
 
-最新版本：0.0.8
+最新版本：0.0.9
 
 官方博客：http://blog.sina.com.cn/u/3868382222
 
@@ -60,25 +60,28 @@ define({
 
 	debug: true,
 	
-	frame: "jquery",  //20130927增加
-	
-	main: "app",  //20130927增加
-	
+	frame: {
+		global: "jquery",  //20131209修改
+		touch: "mobile"
+	}
+
+	main: "app",
+
 	charset: "utf-8", //20131028增加
 
 	base: "http://www.aaa.com/easyjs/" //20131028增加
 
 	alias: {
 		jquery: "bbb/libs/jquery.1.9.1.js",
-		main: "./app.js",
+		mobile: "bbb/libs/jquery.mobile.js",
+		app: "./app.js",
+		mobile_app: "./mobile/app.js",
 		b: "ccc/plugs/plugs.1.0.0.js",
 		d: "./plugs/plugs.js",
 		e: "aaaaaa/bbb/ccc",
 		g: {
-			url: "./plugs/plugs.js",
-			callback: function() {
-				console.log("plug_ok");
-			}
+			global: "a.js",  //20131209修改
+            touch: "b.js"
 		},
 		f: "./test.js",
 		h: "./test1.js"
@@ -97,7 +100,7 @@ define({
 
 debug: 是否处于调试
 
-frame: 开发框架
+frame: 开发框架。 global:传统PC设备，touch:移动设备（Phone/Tablet)
 
 main: 开发主文件
 
@@ -105,11 +108,12 @@ charset: 编码
 
 base: 根目录
 
-alias: 别名
+alias: 别名。 global:传统PC设备，touch:移动设备（Phone/Tablet)
 
 paths: 路径
 
 preload: 预先加载（在开发主文件加载前、开发框架加载后加载）
+
 
 3）书写：
 ======
@@ -135,7 +139,9 @@ define(function(require, exports, module) {
 		
 	});
 	
-	exports.aaa = "a";});
+	exports.aaa = "a";
+
+	return b; });
 </code>
 
 
@@ -148,9 +154,20 @@ exports: 返回值对象。
 module: easyjs主体。
 
 
+“移动设备” 提供的属性：
+
+a) online 是否处于在线。
+
+b) istouch 是否是移动设备。
+
+c) ua 系统 navigator.userAgent 信息。
+
+d) orientation 设备方向或不支持。
+
+
 4）单模块配置及引用方式：
 ======
-module.require(模块名);
+module.require(模块名,[回调函数]);
 
 module.config(配置对象);
 
@@ -182,18 +199,33 @@ module.loadCss(文件地址, 回调函数);
 
 为什么说我们是框架，因为我们是可扩展的，是要创造一个完整生态系统的。
 
-module.extend(原对象或扩展方法名, 函数或对象);
+已删除方法：
+
+module.extend(原对象或扩展方法名, 函数或对象); 
+
+
+替代方法：
+
+on 绑定自定义方法
+
+module.on(扩展方法名, 函数或对象);
+
+off 取消绑定
+
+module.off(扩展方法名);
+
 
 代码：
 
-<code>	module.extend("jq", jQuery);
+<code>	module.on("jq", jQuery);
 	
 	module.jq(function(){
 	
-		alert("hello");
+		module.off("jq");
 		
 	});
 </code>
+
 
 6）开发历史
 ======
@@ -210,6 +242,9 @@ module.extend(原对象或扩展方法名, 函数或对象);
 
 0.0.8 修复之前只能加载两个依赖项等问题及优化内部逻辑
 
+0.0.9 优化内容逻辑，增加及替换部分接口，增加对移动设备的支持。
+
+
 7）案例
 ======
 
@@ -224,6 +259,7 @@ http://life.ku6.com/true/index.shtml
 http://ent.ku6.com/ttbjindex/index.shtml
 
 使用版本：0.0.6
+
 
 8）未来
 ======
