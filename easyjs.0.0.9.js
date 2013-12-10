@@ -474,42 +474,59 @@
 			factory = dependencies;
 			dependencies = [];
 		}
-		new sequence(fixArray(isArray(dependencies) ? dependencies.slice() : [], id.split(' ')), factory);
+		sequence(fixArray(isArray(dependencies) ? dependencies.slice() : [], id.split(' ')), factory);
+	};
+
+	var sequence = function(names, callback) {
+		if (names.length > 0) {
+			return new sequence.fn.init(names, callback);
+		} else {
+			if (callback) callback();
+		}
+	};
+
+	sequence.fn = sequence.prototype = {
+		constructor: sequence,
+		init: function(names, callback) {
+			this.i = 0;
+			this.names = names;
+			this.callback = callback;
+			this.loadFn();
+			return this;
+		},
+		request: function() {
+			this.i += 1;
+			if (this.i >= this.names.length) {
+				if (this.callback) this.callback();
+			} else {
+				this.loadFn();
+			}
+		},
+		loadFn: function() {
+			var data = fix(this.names[this.i]),
+				isJs = /\.js/.test(data.url),
+				self = this;
+			obj.use(data.url, function() {
+				if (data.configCall) data.configCall();
+				self.request();
+			});
+		}
+	};
+
+	sequence.fn.init.prototype = sequence.fn;
+
+	String.prototype.capitalize = function() { //转换
+		return this.charAt(0).toUpperCase() + this.substr(1);
 	};
 
 	var easyjs = function(id, dependencies, factory) {
 		if (typeof id == fixUndefined) return;
 		define(id, dependencies, factory);
 		return this;
-	},
-		sequence = function(names, callback) {
-			if (names.length > 0) {
-				this.i = 0;
-				var request = function(i, names) {
-					if (i + 1 >= names.length) {
-						if (callback) callback();
-					} else {
-						loadFn(i + 1);
-					}
-				},
-					loadFn = function(i) {
-						var data = fix(names[i]),
-							isJs = /\.js/.test(data.url);
-						obj.use(data.url, function() {
-							if (data.configCall) data.configCall();
-							request(i, names);
-						});
-					};
-				loadFn(this.i);
-			}
-		};
-
-	String.prototype.capitalize = function() { //转换
-		return this.charAt(0).toUpperCase() + this.substr(1);
 	};
 
 	mix(easyjs, {
-		ver: "0.0.9.2013120615380001",
+		ver: "0.0.9.2013121010260001",
 		cache: {},
 		config: function(ops) {
 			if (typeof ops == fixUndefined) return obj.config.data;
