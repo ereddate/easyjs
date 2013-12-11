@@ -50,6 +50,9 @@ data-main: 主文件地址
 
 data-file: 预先加载文件地址
 
+[<a href="https://github.com/ereddate/easyjs#%E7%9B%AE%E5%BD%95">返回目录</a>] 
+[<a href="https://github.com/ereddate/easyjs#easyjs">返回页首</a>]
+
 2）配置：
 ======
 
@@ -118,6 +121,8 @@ paths: 路径
 
 preload: 预先加载（在开发主文件加载前、开发框架加载后加载）
 
+[<a href="https://github.com/ereddate/easyjs#%E7%9B%AE%E5%BD%95">返回目录</a>] 
+[<a href="https://github.com/ereddate/easyjs#easyjs">返回页首</a>]
 
 3）书写：
 ======
@@ -178,6 +183,8 @@ c) ua 系统 navigator.userAgent 信息。
 
 d) orientation 设备方向或不支持。
 
+[<a href="https://github.com/ereddate/easyjs#%E7%9B%AE%E5%BD%95">返回目录</a>] 
+[<a href="https://github.com/ereddate/easyjs#easyjs">返回页首</a>]
 
 4）单模块配置及引用方式：
 ======
@@ -208,6 +215,8 @@ module.loadCss(文件地址, 回调函数);
 	});
 </code>
 
+[<a href="https://github.com/ereddate/easyjs#%E7%9B%AE%E5%BD%95">返回目录</a>] 
+[<a href="https://github.com/ereddate/easyjs#easyjs">返回页首</a>]
 
 5）可扩展：
 ======
@@ -241,6 +250,8 @@ module.off(扩展方法名);
 	});
 </code>
 
+[<a href="https://github.com/ereddate/easyjs#%E7%9B%AE%E5%BD%95">返回目录</a>] 
+[<a href="https://github.com/ereddate/easyjs#easyjs">返回页首</a>]
 
 6）开发历史
 ======
@@ -259,6 +270,8 @@ module.off(扩展方法名);
 
 0.0.9 优化内容逻辑，增加及替换部分接口，增加对移动设备的支持。
 
+[<a href="https://github.com/ereddate/easyjs#%E7%9B%AE%E5%BD%95">返回目录</a>] 
+[<a href="https://github.com/ereddate/easyjs#easyjs">返回页首</a>]
 
 7）案例
 ======
@@ -275,6 +288,8 @@ http://ent.ku6.com/ttbjindex/index.shtml
 
 使用版本：0.0.6
 
+[<a href="https://github.com/ereddate/easyjs#%E7%9B%AE%E5%BD%95">返回目录</a>] 
+[<a href="https://github.com/ereddate/easyjs#easyjs">返回页首</a>]
 
 8）未来
 ======
@@ -286,3 +301,6 @@ http://ent.ku6.com/ttbjindex/index.shtml
 easyjs 提供的插件不再是dom选择器等传统框架提供的功能，而是完整的、解决问题的、实现梦想的插件。
 
 easyjs 等待您的加入。
+
+[<a href="https://github.com/ereddate/easyjs#%E7%9B%AE%E5%BD%95">返回目录</a>] 
+[<a href="https://github.com/ereddate/easyjs#easyjs">返回页首</a>]
