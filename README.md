@@ -55,8 +55,12 @@ data-file: 预先加载文件地址
 
 代码：
 
+修改前配置写法 define({ code }); 
+
+修改后配置写法 easyjs.config({ code });
+
 <code>
-define({
+easyjs.config({
 
 	debug: true,
 	
@@ -121,9 +125,19 @@ preload: 预先加载（在开发主文件加载前、开发框架加载后加�
 代码：
 
 <code>
+define({ code });
+
+define(["a","b"], function(){ code });
+
+define("c", ["a","b"], function(){ code });
+
 define(function(require, exports, module) {
 
 	require("a");
+
+	require("a", function(a){
+		console.log(a);
+	});
 	
 	var b = require("f");
 	
@@ -167,6 +181,7 @@ d) orientation 设备方向或不支持。
 
 4）单模块配置及引用方式：
 ======
+
 module.require(模块名,[回调函数]);
 
 module.config(配置对象);

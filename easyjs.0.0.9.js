@@ -25,8 +25,66 @@
 			// see http://msdn.microsoft.com/en-us/library/ms536429(VS.85).aspx
 			(node.getAttribute("href", 4) || node.getAttribute("src", 4))
 		},
+		stringify = function(str) {
+			if (str == null) {
+				return 'null';
+			}
+			if (typeof str != 'string' && str.toJSON) {
+				return str.toJSON();
+			}
+			var type = (function(o) {
+				if (o != null && o.constructor != null) {
+					return Object.prototype.toString.call(o).slice(8, -1);
+				} else if (isFunction(o)) {
+					return "function";
+				} else {
+					return '';
+				}
+			})(str).toLowerCase();
+			switch (type) {
+				case 'string':
+					return '"' + escapeChars(str) + '"';
+				case 'number':
+					var ret = str.toString();
+					return /N/.test(ret) ? 'null' : ret;
+				case 'boolean':
+					return str.toString();
+				case 'date':
+					return 'new Date(' + str.getTime() + ')';
+				case 'array':
+					var ar = [];
+					for (var i = 0; i < str.length; i++) {
+						ar[i] = stringify(str[i]);
+					}
+					return '[' + ar.join(',') + ']';
+				case 'object':
+					if (isParentObject(str)) {
+						var ar = [];
+						for (i in str) {
+							ar.push('"' + escapeChars(i) + '":' + stringify(str[i]));
+						}
+						return '{' + ar.join(',') + '}';
+					}
+				case 'function':
+					return str.toString();
+			}
+			return 'null';
+		},
+		escapeChars = function(s) {
+			return (function(s, arr) {
+				for (var i = 0; i < arr.length; i++) {
+					s = s.replace(arr[i][0], arr[i][1]);
+				}
+				return s;
+			})(s, [
+				[/\\/g, "\\\\"],
+				[/"/g, "\\\""],
+				[/\r/g, "\\r"],
+				[/\n/g, "\\n"],
+				[/\t/g, "\\t"]
+			]);
+		},
 		inArray = function(obj, array) {
-			array = array ? array : this[0];
 			var len, i;
 			if (typeof array != fixUndefined) {
 				if (indexOf) {
@@ -56,7 +114,7 @@
 			return !0
 		},
 		isArray = function(v) {
-			return typeof v !== fixUndefined ? (v.constructor == Array) ? true : false : false;
+			return typeof v !== fixUndefined && v.constructor == Array ? true : false;
 		},
 		isParentObject = function(v) {
 			var obj = v ? v : null;
@@ -328,14 +386,15 @@
 			id, dependencies, factory, meta, code;
 		if (len == 0) return;
 		if (len == 1) {
-			if (isParentObject(args[0])) {
-				mix(easyjs.config.data, id);
-				return;
+			if (!isFunction(args[0])) {
+				factory = 'function(require, exports, module) {return ' + stringify(args[0]) + ';}';
+				//mix(easyjs.config.data, id);
+				//return;
 			} else if (isFunction(args[0])) {
 				factory = args[0];
-				id = undefined;
-				dependencies = undefined;
 			}
+			id = undefined;
+			dependencies = undefined;
 		} else if (len == 2) {
 			if (isFunction(args[1])) {
 				if (isArray(args[0])) {
@@ -353,8 +412,7 @@
 			dependencies = typeof args[1] == "string" ? args[1].split(' ') : isArray(args[1]) ? args[1] : undefined;
 			factory = isFunction(args[2]) ? args[2] : undefined;
 		}
-
-		code = factory ? factory.toString() : undefined;
+		code = isFunction(factory) ? factory.toString() : typeof factory == "string" ? factory : undefined;
 		dependencies = dependencies || (function(deps) {
 			each(deps, function(i, value) {
 				deps[i] = fix(value).url;
