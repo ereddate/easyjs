@@ -2,7 +2,6 @@
 	if (global.CollectGarbage) CollectGarbage();
 	var doc = global.document,
 		_toString = Object.prototype.toString,
-		docElem = doc.documentElement,
 		hasOwn = Object.prototype.hasOwnProperty,
 		indexOf = Array.prototype.indexOf,
 		currentlyAddingScript,
@@ -45,8 +44,7 @@
 				case 'string':
 					return '"' + escapeChars(str) + '"';
 				case 'number':
-					var ret = str.toString();
-					return /N/.test(ret) ? 'null' : ret;
+					return str.toString();
 				case 'boolean':
 					return str.toString();
 				case 'date':
@@ -108,10 +106,12 @@
 			});
 			return inarr;
 		},
-		isEmptyObject = function(e) {
-			var t;
-			for (t in e) return !1;
-			return !0
+		isEmpty = function(v) {
+			return typeof v == fixUndefined || v == null || typeof v == "string" && v.trim() == "" || isArray(v) && v.length == 0 || typeof v == "object" && (function(e) {
+				var t;
+				for (t in e) return !1;
+				return !0
+			})(v) ? true : false;
 		},
 		isArray = function(v) {
 			return typeof v !== fixUndefined && v.constructor == Array ? true : false;
@@ -131,9 +131,6 @@
 			var key;
 			for (key in obj) {}
 			return (typeof key == fixUndefined) || hasOwn.call(obj, key);
-		},
-		random = function(max, min) { //随机数
-			return typeof max != fixUndefined ? Math.floor(Math.random() * (max - (min || 0) + 1) + (min || 0)) : 0;
 		},
 		isFunction = function(v) {
 			return typeof v != fixUndefined ? typeof v === "function" && typeof v.call != fixUndefined && _toString.call(v) === '[object Function]' : false;
@@ -228,11 +225,6 @@
 					return interactiveScript;
 				}
 			}
-		},
-		fxEval = function(code, args) {
-			return (window.execScript || function(data) {
-				return window["eval"].call(window, data);
-			})("(" + code + ")" + (args ? "(" + args + ")" : ""));
 		},
 		isArraylike = function(obj) {
 			var length = obj.length,
@@ -386,13 +378,7 @@
 			id, dependencies, factory, meta, code;
 		if (len == 0) return;
 		if (len == 1) {
-			if (!isFunction(args[0])) {
-				factory = 'function(require, exports, module) {return ' + stringify(args[0]) + ';}';
-				//mix(easyjs.config.data, id);
-				//return;
-			} else if (isFunction(args[0])) {
-				factory = args[0];
-			}
+			factory = isFunction(args[0]) ? args[0] : 'function(require, exports, module) {return ' + stringify(args[0]) + ';}';
 			id = undefined;
 			dependencies = undefined;
 		} else if (len == 2) {
@@ -423,7 +409,7 @@
 		meta = {
 			id: id,
 			uri: id,
-			code: code,
+			factory: factory,
 			dependencies: dependencies
 		};
 		if (!meta.id && doc.attachEvent) {
@@ -466,16 +452,17 @@
 				dependencies: [],
 				exports: null,
 				uri: id,
-				status: 0
+				status: 0,
+				factory: null
 			};
 		mix(options, {
 			dependencies: !isCss ? mod.dependencies.length > 0 ? mod.dependencies : dependencies : []
 		});
 		easyjs.cache[id] = options;
-		mod.fixEval = function(code, id) {
-			var exports = fxEval(code ? code : cache[id] && cache[id].code || "", "easyjs.require, (easyjs.cache.tempExport = {}), easyjs");
+		mod.eval = function(code, id) {
+			var exports = (code ? code : cache[id] && cache[id].factory)(easyjs.require, (easyjs.cache.tempExport = {}), easyjs);
 			if (easyjs.cache[id]) {
-				if (isFunction(exports) || isParentObject(exports) && !isEmptyObject(exports) || typeof exports == "string" || isArray(exports)) {
+				if (!isEmpty(exports)) {
 					easyjs.cache[id].exports = exports;
 				} else {
 					easyjs.cache[id].exports = easyjs.cache.tempExport;
@@ -488,13 +475,14 @@
 				var id = mod.id,
 					exports = anycode ? anycode.exports : cache[id].exports,
 					dependencies = anycode && anycode.dependencies.length > 0 ? anycode.dependencies : cache[id].dependencies,
-					code = anycode && anycode.code ? anycode.code : cache[id].code;
-				cache[id].code = code;
+					code = anycode && anycode.factory ? anycode.factory : cache[id].factory;
+				cache[id].factory = code;
 				anycode = null;
 				mix(easyjs.cache[id], {
 					dependencies: dependencies,
 					status: 1,
-					exports: exports
+					exports: exports,
+					factory: code
 				});
 				if (code) {
 					if (dependencies.length > 0) {
@@ -503,21 +491,21 @@
 								codes = (function(list) {
 									var codes = [];
 									each(list, function(i, name) {
-										codes.push(cache[name].code);
+										codes.push(cache[name].factory);
 									});
 									return codes;
 								})(list);
 							list.push(id);
 							codes.push(code);
 							each(codes, function(i, scode) {
-								self.fixEval(scode, list[i]);
+								self.eval(scode, list[i]);
 							});
 							if (factory) factory();
 							delete mod.callback;
 						});
 						return;
 					} else {
-						self.fixEval(code, id);
+						self.eval(code, id);
 					}
 				}
 			}
@@ -584,7 +572,7 @@
 	};
 
 	mix(easyjs, {
-		ver: "0.0.9.2013121010260001",
+		ver: "0.0.9.20131212100200001",
 		cache: {},
 		config: function(ops) {
 			if (typeof ops == fixUndefined) return obj.config.data;
