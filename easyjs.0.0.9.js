@@ -18,6 +18,9 @@
 			DOUBLE_DOT_RE: /\/[^\/]+\/\.\.\//,
 			DOUBLE_SLASH_RE: /([^:\/])\/\//g
 		},
+		magic = function(s, opts) {
+			return new Function("opts", s)(opts);
+		},
 		getsrc = function(node) {
 			return node.hasAttribute ? // non-IE6/7
 			(node.href || node.src) :
@@ -99,13 +102,6 @@
 			}
 			return -1;
 		},
-		fixArray = function(arr, inarr) {
-			if (typeof inarr == fixUndefined) return arr;
-			each(arr, function(i, value) {
-				inarr.push(value);
-			});
-			return inarr;
-		},
 		isEmpty = function(v) {
 			return typeof v == fixUndefined || v == null || typeof v == "string" && v.trim() == "" || isArray(v) && v.length == 0 || typeof v == "object" && (function(e) {
 				var t;
@@ -165,7 +161,7 @@
 			}
 			return url;
 		},
-		fixArray = function(arr, inarr) {
+		merge = function(arr, inarr) {
 			if (typeof inarr == fixUndefined) return arr;
 			each(arr, function(i, value) {
 				inarr.push(value);
@@ -378,7 +374,7 @@
 			id, dependencies, factory, meta, code;
 		if (len == 0) return;
 		if (len == 1) {
-			factory = isFunction(args[0]) ? args[0] : 'function(require, exports, module) {return ' + stringify(args[0]) + ';}';
+			factory = isFunction(args[0]) ? args[0] : magic('return ' + stringify(args[0]) + ';');
 			id = undefined;
 			dependencies = undefined;
 		} else if (len == 2) {
@@ -460,7 +456,8 @@
 		});
 		easyjs.cache[id] = options;
 		mod.eval = function(code, id) {
-			var exports = (code ? code : cache[id] && cache[id].factory)(easyjs.require, (easyjs.cache.tempExport = {}), easyjs);
+			var fn = code ? code : cache[id] && cache[id].factory,
+				exports = isFunction(fn) ? (fn)(easyjs.require, (easyjs.cache.tempExport = {}), easyjs) : fn;
 			if (easyjs.cache[id]) {
 				if (!isEmpty(exports)) {
 					easyjs.cache[id].exports = exports;
@@ -520,7 +517,7 @@
 			factory = dependencies;
 			dependencies = [];
 		}
-		sequence(fixArray(isArray(dependencies) ? dependencies.slice() : [], id.split(' ')), factory);
+		sequence(merge(isArray(dependencies) ? dependencies.slice() : [], id.split(' ')), factory);
 	};
 
 	var sequence = function(names, callback) {
