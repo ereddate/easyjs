@@ -138,14 +138,16 @@ define("c", ["a","b"], function(){ code });
 
 define(function(require, exports, module) {
 
+	//require("") 方法是初次加载依赖项
+	
 	require("a");
 
+	/*require("", callback) 方法只做已加载依赖项的获取接口使用，
+		
+	如新加载依赖项请使用USE方法*/
+		
 	require("a", function(a){
 	
-		//此方法只做已加载依赖项的获取接口使用，
-		
-		//如新加载依赖项请使用USE方法
-		
 		console.log(a);
 	});
 	
