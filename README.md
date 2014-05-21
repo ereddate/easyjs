@@ -5,7 +5,7 @@ easyjs
 
 <p>声明：此框架与其他名称相近或同名的（包括easyjs.org）无任何关系。</p>
 
-最新版本：0.1.0
+最新版本：0.1.1
 
 官方博客：http://blog.sina.com.cn/u/3868382222
 
@@ -278,6 +278,8 @@ module.off(扩展方法名);
 0.0.9 优化内容逻辑，增加及替换部分接口，增加对移动设备的支持。
 
 0.1.0 修复由于重复引用依赖项而产生的重复加载依赖项对应的文件。
+
+0.1.1 修复部分占用内存写法。
 
 [<a href="https://github.com/ereddate/easyjs#%E7%9B%AE%E5%BD%95">返回目录</a>] 
 [<a href="https://github.com/ereddate/easyjs#easyjs">返回页首</a>]
